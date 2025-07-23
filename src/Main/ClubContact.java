@@ -26,8 +26,8 @@ public class ClubContact extends ContactInfo{
         return strContactInfo.toString();
     }
 	
-	protected String getContactType(){
-		return "ClubContact";
+	protected ContactAttribute getContactType(){
+		return ContactAttribute.CLUB_NAME;
 	}
 	
 	boolean matches(ContactAttribute attribute, String query){

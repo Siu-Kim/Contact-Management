@@ -11,9 +11,9 @@ public abstract class ContactInfo {
     
     protected abstract String getInfo();
     public abstract String toString();
-    protected abstract String getContactType();
+    protected abstract ContactAttribute getContactType();
 	abstract boolean matches(ContactAttribute attribute, String query);
-	abstract void setInfo(int type, String query);
+	abstract void setInfo(ContactAttribute attribute, String query);
 	
 	String getName(){
 		return this.name;	

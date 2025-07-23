@@ -31,8 +31,8 @@ public class NormalContact extends ContactInfo{
         return strContactInfo.toString();       
     }
 	
-	protected String getContactType(){
-		return "NormalContact";
+	protected ContactAttribute getContactType(){
+		return ContactAttribute.RELATION;
 	}
 	
 	boolean matches(ContactAttribute attribute, String query){
