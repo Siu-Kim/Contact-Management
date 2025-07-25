@@ -37,10 +37,10 @@ public class ContactManager{
 			return this.Storage;
 		}
 		
-		ArrayList<ContactInfo> search(String field, String query){ //query와 같은 값을 가진 모든 Contact를 List에 add하여 반환
+		ArrayList<ContactInfo> search(ContactAttribute attribute, String query){ //query와 같은 값을 가진 모든 Contact를 List에 add하여 반환
 			ArrayList<ContactInfo> searchedContact = new ArrayList<>();
 			for(T contact: Storage){
-				if(contact.matches(field, query)){
+				if(contact.matches(attribute, query)){
 					searchedContact.add(contact);
 					
 					return searchedContact;
@@ -158,10 +158,10 @@ public class ContactManager{
 		String[] field = {"name","phone number", "relation","club name", "department"};
 		String searchField = field[type-1];
 		
-		
+
 		try{
 			String query = cli.promptForQuery(type);
-			List<ContactInfo> listSearchInfo = contactStorage.search(searchField, query);
+			List<ContactInfo> listSearchInfo = contactStorage.search(` query);
 			List<String> strListSearchInfo = new ArrayList<>();
 			for(ContactInfo searchContact: listSearchInfo){
 				strListSearchInfo.add(searchContact.getInfo());
@@ -200,7 +200,7 @@ public class ContactManager{
 		catch(IndexOutOfBoundsException e){
 			cli.printErrorMessage(e.toString());
 		}
-		catch(RuntimseException e){
+		catch(RuntimeException e){
 			cli.printErrorMessage(e.toString());
 		}		
 		return;
@@ -212,20 +212,21 @@ public class ContactManager{
 		int type = cli.getEditContactMenu();
 		try{ 
 			ContactAttribute inputAttribute = ContactAttribute.findByAttributeCount(type);
-			String query = cli.promptForQuery(type);
+			String query = cli.promptForQuery(inputAttribute);
 			List<ContactInfo> listSearchInfo = contactStorage.search(inputAttribute, query);
 			
+
 		
 
 
 
 		}
-		//if(type <= 0 || type > 5) {cli.printErrorMessage("Selected Wrong Number... Please Try Again."); return;} // Enum 객체를 찾으면서 내부 메서드로 예외처리 해결하도록 변경 필요
-		
-		
-		String[] field = {"name","phone number", "relation","club name", "department"};
-		String searchField = field[type-1];
-		
+		catch(){
+
+		}	
+		catch(){
+			
+		}
 		
 		
 	}

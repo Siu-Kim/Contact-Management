@@ -104,17 +104,17 @@ public class CommandLineInterface {
 		return getInteger();
 	}
 	
-	String promptForQuery(int type){
-		switch(type){
-			case 1:
+	String promptForQuery(ContactAttribute attribute){
+		switch(attribute){
+			case NAME:
 				return promptForName();
-			case 2:
+			case PHONE_NUMBER:
 				return promptForPhoneNumber();
-			case 3:
+			case RELATION:
 				return promptForRelation();
-			case 4:
+			case CLUB_NAME:
 				return promptForClubName();
-			case 5:
+			case DEPARTMENT:
 				return promptForDepartment();
 			default:
 				throw new RuntimeException("There is no contact with this query.");
@@ -171,6 +171,8 @@ public class CommandLineInterface {
 	
 		return getInteger();
 	}
+
+	
 	
 	void printContactInfo(List<String> strListContactInfo){
 		System.out.printf("Contact Information\n");

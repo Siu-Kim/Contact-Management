@@ -13,7 +13,7 @@ public abstract class ContactInfo {
     public abstract String toString();
     protected abstract String getContactType();
 	abstract boolean matches(ContactAttribute attribute, String query);
-	abstract void setInfo(int type, String query);
+	abstract void setInfo(ContactAttribute attribute, String query);
 	
 	String getName(){
 		return this.name;	
