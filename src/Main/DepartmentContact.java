@@ -25,8 +25,8 @@ public class DepartmentContact extends ContactInfo{
         
         return strContactInfo.toString();
     }
-    protected String getContactType(){
-		return "DepartmentContact";
+    protected ContactAttribute getContactType(){
+		return ContactAttribute.DEPARTMENT;
 	}
 	
 	boolean matches(ContactAttribute attribute, String query){

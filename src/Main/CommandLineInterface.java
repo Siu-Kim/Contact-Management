@@ -172,6 +172,23 @@ public class CommandLineInterface {
 		return getInteger();
 	}
 	
+	int promptForEdit(){
+		System.out.print("\nSelect the Contact number to Edit: ");
+		return getInteger();
+	}
+	
+	int promptForEditAttribute(String contactInfo, ContactAttribute attribute){
+		System.out.printf("Contact Information\n");
+		System.out.printf("\t%s\n", contactInfo);
+		System.out.printf("\tSelect the variable to Edit\n");
+		
+		
+		
+		
+		
+		
+	}
+	
 	void printContactInfo(List<String> strListContactInfo){
 		System.out.printf("Contact Information\n");
 		for(String strSearchInfo: strListContactInfo){
