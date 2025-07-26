@@ -29,6 +29,7 @@ public enum ContactAttribute {
 	public  static ContactAttribute findByAttributeCount(int attributeCount){ // attributeCount를 받아 해당하는 ContactAttribute 객체를 반환(value -> key)
 		return Arrays.stream(ContactAttribute.values())
 				.filter(attribute -> attributeCount == attribute.attributeCount)
-				.findFirst().orElseThrow(() -> new IllegalArgumentException("Selected Wrong Number... Please Try Again."));
+				.findFirst().orElseThrow(() -> new IllegalArgumentException
+				("Selected Wrong Number... Please Try Again."));
 	}
 }

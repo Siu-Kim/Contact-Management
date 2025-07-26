@@ -180,15 +180,32 @@ public class CommandLineInterface {
 	}
 	
 	int promptForEditAttribute(String contactInfo, ContactAttribute attribute){
-		System.out.printf("Contact Information\n");
-		System.out.printf("\t%s\n", contactInfo);
-		System.out.printf("\tSelect the variable to Edit\n");
-		
-		
-		
-		
-		
-		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Contact Information\n")
+				.append(String.format("\t%s\n", contactInfo))
+				.append("Select the variable to Edit\n")
+				.append("\t1. name\n")
+				.append("\t2. phone number\n");
+		switch (attribute) {
+			case RELATION:
+				sb.append("\t3. relation\n").append("Select:");
+				break;
+			case CLUB_NAME:
+				sb.append("\t3. club name\n").append("Select:");
+				break;
+			case DEPARTMENT:
+				sb.append("\t3. department\n").append("Select:");
+				break;
+			default:
+				throw new IllegalArgumentException
+				("The parameter \'ContactAttribute attribute\' has wrong value.\nIt must have only RELATION or CLUB_NAME or DEPARTMENT these three value.");
+		}
+		System.out.print(sb);
+		return getInteger();		
+	}
+
+	void printEditSuccessfully(){
+		System.out.println("Edit Successfully completed.");
 	}
 	
 	void printContactInfo(List<String> strListContactInfo){
