@@ -182,7 +182,7 @@ public class CommandLineInterface {
 	int promptForEditAttribute(String contactInfo, ContactAttribute attribute){
 		StringBuilder sb = new StringBuilder();
 		sb.append("Contact Information\n")
-				.append(String.format("\t%s\n", contactInfo))
+				.append(String.format("\t%s", contactInfo))
 				.append("Select the variable to Edit\n")
 				.append("\t1. name\n")
 				.append("\t2. phone number\n");
@@ -212,7 +212,7 @@ public class CommandLineInterface {
 		System.out.printf("Contact Information\n");
 		for(String strSearchInfo: strListContactInfo){
 			int i = 0;
-			System.out.printf("\t%d. %s\n", ++i, strSearchInfo);
+			System.out.printf("\t%d. %s", ++i, strSearchInfo);
 		}
 		
 		return;
@@ -229,7 +229,7 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i <normalContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(normalContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(normalContacts.get(i));
 			}
 		}
 		
@@ -240,7 +240,7 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i < clubContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(clubContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(clubContacts.get(i));
 			}
 		}
 		
@@ -251,7 +251,7 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i <departmentContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(departmentContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(departmentContacts.get(i));
 			}
 		}
 		

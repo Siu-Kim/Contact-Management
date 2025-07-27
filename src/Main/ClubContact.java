@@ -21,7 +21,7 @@ public class ClubContact extends ContactInfo{
         StringBuilder strContactInfo = new StringBuilder();
         strContactInfo.append("name: ").append(this.name).append(" / ");
         strContactInfo.append("phone number: ").append(this.phonenum).append(" / ");
-        strContactInfo.append("club name: ").append(this.clubName);
+        strContactInfo.append("club name: ").append(this.clubName).append('\n');
         
         return strContactInfo.toString();
     }

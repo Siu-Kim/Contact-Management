@@ -26,7 +26,7 @@ public class NormalContact extends ContactInfo{
 		StringBuilder strContactInfo = new StringBuilder();
         strContactInfo.append("name: ").append(this.name).append(" / ");
         strContactInfo.append("phone number: ").append(this.phonenum).append(" / ");
-        strContactInfo.append("relation: ").append(this.relation);
+        strContactInfo.append("relation: ").append(this.relation).append('\n');
         
         return strContactInfo.toString();       
     }

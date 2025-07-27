@@ -21,7 +21,7 @@ public class DepartmentContact extends ContactInfo{
         StringBuilder strContactInfo = new StringBuilder();
         strContactInfo.append("name: ").append(this.name).append(" / ");
         strContactInfo.append("phone number: ").append(this.phonenum).append(" / ");
-        strContactInfo.append("department: ").append(this.department);
+        strContactInfo.append("department: ").append(this.department).append('\n');
         
         return strContactInfo.toString();
     }

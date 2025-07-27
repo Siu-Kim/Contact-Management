@@ -1,5 +1,9 @@
 package Main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,12 +114,32 @@ public class ContactManager{
 	}
 
 	private void saveToFile(){
-
-	}
-	
-	private void loadFromFile(){
+		try{
+		FileOutputInterface FOI = new FileOutputInterface("./ContactBook.txt");
+		FOI.saveCurrentContactToFile(contactStorage.getAllContacts());
 		
+		}
+		catch(FileNotFoundException e){
+			cli.printErrorMessage(e.getMessage());
+		}
+		catch(IOException e){
+			cli.printErrorMessage(e.getMessage());
+		}
+	}	
+
+	private void loadFromFile(){
+		try{
+		FileInputInterface FII = new FileInputInterface("./ContactBook.txt");
+		}
+		catch(FileNotFoundException e){
+			cli.printErrorMessage(e.getMessage());
+		}
 	}
+	/*
+	 * file에 저장된 Contact를 contactStorage로 저장. String parsing / 중복 검사 기능 구현 필요
+	 * file IO를 담당하는 추가적인 class 필요(FileInputStream, FileOutputStream을 extend하는 새로운 클래스 구현)
+	 */
+	
 
 	private void createContact(){ //
 		
