@@ -26,11 +26,11 @@ public class FileOutputInterface{
     }
 
     void saveCurrentContactToFile(List<ContactInfo> currentContacts) throws IOException{
-        convertToByteAray(currentContacts);
+        convertToByteArray(currentContacts);
         outputStream.write(convertedFileContent);
     }
     
-    private void convertToByteAray(List<ContactInfo> currentContacts){
+    private void convertToByteArray(List<ContactInfo> currentContacts){
         StringBuilder fileContent = new StringBuilder();
         for(ContactInfo contact: currentContacts){
             fileContent.append(contact.getInfo());
