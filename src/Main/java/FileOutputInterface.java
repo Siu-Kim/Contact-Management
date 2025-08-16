@@ -1,4 +1,4 @@
-package Main;
+package Main.java;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +18,7 @@ import java.util.List;
 public class FileOutputInterface{
     //List<ContactInfo> currentContacts;
     FileOutputStream outputStream;
-    byte[] convertedFileContent;
+    byte[] convertedFileContents;
 
     FileOutputInterface(String fileName) throws FileNotFoundException{
         //this.currentContacts = currentContacts;
@@ -27,7 +27,7 @@ public class FileOutputInterface{
 
     void saveCurrentContactToFile(List<ContactInfo> currentContacts) throws IOException{
         convertToByteArray(currentContacts);
-        outputStream.write(convertedFileContent);
+        outputStream.write(convertedFileContents);
     }
     
     private void convertToByteArray(List<ContactInfo> currentContacts){
@@ -35,15 +35,9 @@ public class FileOutputInterface{
         for(ContactInfo contact: currentContacts){
             fileContent.append(contact.getInfo());
         }
-        convertedFileContent = fileContent.toString().getBytes();
+        convertedFileContents = fileContent.toString().getBytes();
         
         return;
     }
 
-
-
-
-
-
-    
 }

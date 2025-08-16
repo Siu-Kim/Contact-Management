@@ -1,4 +1,4 @@
-package Main;
+package Main.java;
 import java.util.Scanner;
 import java.util.List;
 
@@ -256,6 +256,11 @@ public class CommandLineInterface {
 		}
 		
 		System.out.println(sb);
+	}
+
+	void printLoadedContact(String fileContents){
+		System.out.println("");
+		System.out.println(fileContents);
 	}
 	
 	void printErrorMessage(String errorMessage){

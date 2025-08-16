@@ -1,4 +1,4 @@
-package Main;
+package Main.java;
 
 public class ClubContact extends ContactInfo{
     private String clubName;

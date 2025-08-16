@@ -1,4 +1,4 @@
-package Main;
+package Main.java;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -115,8 +115,8 @@ public class ContactManager{
 
 	private void saveToFile(){
 		try{
-		FileOutputInterface FOI = new FileOutputInterface("./ContactBook.txt");
-		FOI.saveCurrentContactToFile(contactStorage.getAllContacts());
+			FileOutputInterface FOI = new FileOutputInterface("./src/Main/resources/ContactBook.txt");
+			FOI.saveCurrentContactToFile(contactStorage.getAllContacts());
 		
 		}
 		catch(FileNotFoundException e){
@@ -129,9 +129,14 @@ public class ContactManager{
 
 	private void loadFromFile(){
 		try{
-		FileInputInterface FII = new FileInputInterface("./ContactBook.txt");
+			FileInputInterface FII = new FileInputInterface("./src/Main/resources/ContactBook.txt");
+			String fileContents = FII.loadSavedContactFile();
+			cli.printLoadedContact(fileContents);
 		}
 		catch(FileNotFoundException e){
+			cli.printErrorMessage(e.getMessage());
+		}
+		catch(IOException e){
 			cli.printErrorMessage(e.getMessage());
 		}
 	}
