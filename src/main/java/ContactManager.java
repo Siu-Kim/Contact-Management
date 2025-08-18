@@ -1,11 +1,11 @@
-package Main.java;
+package main.java;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.relation.Relation;
 
 public class ContactManager{
   
@@ -117,7 +117,7 @@ public class ContactManager{
 		try{
 			FileOutputInterface FOI = new FileOutputInterface("./src/Main/resources/ContactBook.txt");
 			FOI.saveCurrentContactToFile(contactStorage.getAllContacts());
-		
+			return;
 		}
 		catch(FileNotFoundException e){
 			cli.printErrorMessage(e.getMessage());
@@ -130,8 +130,18 @@ public class ContactManager{
 	private void loadFromFile(){
 		try{
 			FileInputInterface FII = new FileInputInterface("./src/Main/resources/ContactBook.txt");
-			String fileContents = FII.loadSavedContactFile();
-			cli.printLoadedContact(fileContents);
+			List<String> fileContacts = FII.loadSavedContactFile();
+			
+			for(String contactInfo: fileContacts){
+				String parsedContactInfo[] = parseFileContents(contactInfo);
+				if(!checkDuplicated(parsedContactInfo)){
+					addFileContact(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2]);
+				}
+
+			}
+
+
+			return;
 		}
 		catch(FileNotFoundException e){
 			cli.printErrorMessage(e.getMessage());
@@ -143,8 +153,36 @@ public class ContactManager{
 	/*
 	 * file에 저장된 Contact를 contactStorage로 저장. String parsing / 중복 검사 기능 구현 필요
 	 * file IO를 담당하는 추가적인 class 필요(FileInputStream, FileOutputStream을 extend하는 새로운 클래스 구현)
+	 * parsing 담당하는 method, checkDuplicated method 추가 필요.
+	 * parsing 할 때 각 line 별로 parse / checkDublicated / addContact 세 개의 method 실행
+	 * attribute 별로 구분해서 contact 객체 생성.
 	 */
-	
+
+	// 공백 기준으로 parsing해서 
+	private String[] parseFileContents(String contactInfo){
+		String parsedContactInfo[] = contactInfo.split(" ");
+		return parsedContactInfo;
+	}
+
+	//Storage의 contact와 중복인 경우, true을 반환
+	private boolean checkDuplicated(String parsedContactInfo[]){
+
+
+		return false;
+	}
+	private void addFileContact(String name, String phonenum, String attribute){
+		ContactAttribute type = ContactAttribute.findByAttributeCount(attribute);
+		switch(type){
+			case RELATION:
+				contactStorage.addContact(new NormalContact(name, phonenum, attribute));
+			case CLUB_NAME:
+				contactStorage.addContact(new ClubContact(name, phonenum, attribute));
+			case DEPARTMENT:
+				contactStorage.addContact(new DepartmentContact(name, phonenum, attribute));
+			default:
+				break;
+		}
+	}
 
 	private void createContact(){ //
 		
@@ -290,6 +328,10 @@ public class ContactManager{
 				case DEPARTMENT:
 					strDepartmentContacts.add(contact.getInfo());
 					break;	
+				default:
+					cli.printErrorMessage("Error occuerd. Please try again.");
+					cli.printErrorMessage(contact.getInfo());
+					return;
 			}
 		}
 		cli.printAllContactInfo(strNormalContacts, strClubContacts, strDepartmentContacts);

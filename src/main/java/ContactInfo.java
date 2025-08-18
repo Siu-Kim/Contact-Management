@@ -1,4 +1,4 @@
-package Main.java;
+package main.java;
 
 public abstract class ContactInfo {
     private String name;

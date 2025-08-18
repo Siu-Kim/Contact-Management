@@ -1,4 +1,4 @@
-package Main.java;
+package main.java;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,11 +33,22 @@ public class FileOutputInterface{
     private void convertToByteArray(List<ContactInfo> currentContacts){
         StringBuilder fileContent = new StringBuilder();
         for(ContactInfo contact: currentContacts){
-            fileContent.append(contact.getInfo());
+            fileContent.append(convertToFileContactFormat(contact));
         }
         convertedFileContents = fileContent.toString().getBytes();
         
         return;
+    }
+
+    private String convertToFileContactFormat(ContactInfo contact){
+        StringBuilder sb = new StringBuilder();
+        ContactAttribute attribute = contact.getContactType();
+
+        sb.append(contact.getName()).append(' ')
+        .append(contact.getPhoneNumber()).append(' ')
+        .append(attribute.getAttributeStringFormat()).append('\n');
+
+        return sb.toString();
     }
 
 }

@@ -1,4 +1,4 @@
-package Main.java;
+package main.java;
 
 public class DepartmentContact extends ContactInfo{
     private String department;
