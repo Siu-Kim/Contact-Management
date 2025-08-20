@@ -25,17 +25,17 @@ public enum ContactAttribute {
 		return attributeStringFormat;
 	}
 
-	public  static ContactAttribute findByAttributeCount(int attributeCount){ // attributeCount를 받아 해당하는 ContactAttribute 객체를 반환(value -> key)
+	public static ContactAttribute findByAttributeCount(int attributeCount){ // attributeCount를 받아 해당하는 ContactAttribute 객체를 반환(value -> key)
 		return Arrays.stream(ContactAttribute.values())
 				.filter(attribute -> attributeCount == attribute.attributeCount)
 				.findFirst().orElseThrow(() -> new IllegalArgumentException
-				("Selected Wrong Number... Please Try Again."));
+				("Cannot find this attribute count... Please Try Again."));
 	}
 
-	public  static ContactAttribute findByAttributeCount(String attributeStringFormat){ // attributeStringFormat를 받아 해당하는 ContactAttribute 객체를 반환(value -> key)
+	public static ContactAttribute findByAttributeStringFormat(String attributeStringFormat){ // attributeStringFormat를 받아 해당하는 ContactAttribute 객체를 반환(value -> key)
 		return Arrays.stream(ContactAttribute.values())
-				.filter(attribute -> attributeStringFormat == attribute.attributeStringFormat)
+				.filter(attribute -> attributeStringFormat.equals(attribute.attributeStringFormat))
 				.findFirst().orElseThrow(() -> new IllegalArgumentException
-				("Selected Wrong Number... Please Try Again."));
+				("Cannot find this attribute string... Please Try Again."));
 	}
 }

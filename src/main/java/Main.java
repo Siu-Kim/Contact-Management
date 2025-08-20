@@ -19,10 +19,10 @@ public class Main {
 			}
 			catch(Exception e)
 			{
-				cli.printErrorMessage("RuntimeException occurs. restart main menu.");
+				e.getStackTrace();
 			}      	  
 		}
 		System.out.println("Exiting Contact Manager");
     }
-
+//"RuntimeException occurs. restart main menu."
 }

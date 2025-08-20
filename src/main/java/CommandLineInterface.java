@@ -1,5 +1,6 @@
 package main.java;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class CommandLineInterface {
@@ -9,12 +10,12 @@ public class CommandLineInterface {
 		sc = new Scanner(System.in);
 	}
 
-	private String getString(){
+	private String getString() throws InputMismatchException{
 		String strUserInput = sc.nextLine();
 		
 		return strUserInput;
 	}
-	private int getInteger(){
+	private int getInteger() throws InputMismatchException{
 		int intUserInput = sc.nextInt();
 		sc.nextLine(); //개행문자 제거를 위한 코드
 		return intUserInput;
@@ -258,9 +259,9 @@ public class CommandLineInterface {
 		System.out.println(sb);
 	}
 
-	void printLoadedContact(String fileContents){
-		System.out.println("");
-		System.out.println(fileContents);
+	void printResultOfLoadContact(int countAddedContact){
+		System.out.printf("%d Contacts from File have loaded  Successfully to Storage...\n\n", countAddedContact);
+		return;
 	}
 	
 	void printErrorMessage(String errorMessage){
