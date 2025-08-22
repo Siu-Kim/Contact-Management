@@ -42,10 +42,11 @@ public class ContactManager{
 			return this.Storage;
 		}
 
-		boolean isSameContact(String name, String phonenum, ContactAttribute type){
+		boolean isSameContact(String name, String phonenum, String attribute){
 			for(T contact: Storage){
-				if((contact.getName() == name) && (contact.getPhoneNumber() == phonenum) 
-				&& (contact.getContactType() == type)){
+				String contactElement[] = contact.getInfo();
+				if((contactElement[0] == name) && (contactElement[1] == phonenum) 
+				&& (contactElement[2] == attribute)){
 					return true;
 				}
 			}
@@ -162,13 +163,13 @@ public class ContactManager{
 	}
 
 	private String[] parseFileContents(String contactInfo){
-		String parsedContactInfo[] = contactInfo.split(" ");
+		String parsedContactInfo[] = contactInfo.split("\\");
 		return parsedContactInfo;
 	}
 
 	private boolean checkDuplicated(String parsedContactInfo[]){
-		ContactAttribute type = ContactAttribute.findByAttributeStringFormat(parsedContactInfo[2]);
-		return contactStorage.isSameContact(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2]);
+		return contactStorage.isSameContact
+		(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2]);
 	}
 
 	private void addFileContact(String name, String phonenum, String attribute){
@@ -188,7 +189,7 @@ public class ContactManager{
 		}
 	}
 
-	private void createContact(){ //
+	private void createContact(){
 		
 		int type = cli.getCreateContactMenu();
 		String name = cli.promptForName();
@@ -236,7 +237,7 @@ public class ContactManager{
 			
 			List<String> strListSearchInfo = new ArrayList<>();
 			for(ContactInfo searchContact: listSearchInfo){
-				strListSearchInfo.add(searchContact.getInfo());
+				strListSearchInfo.add(searchContact.toString());
 			}
 			cli.printContactInfo(strListSearchInfo);
 			
@@ -261,7 +262,7 @@ public class ContactManager{
 			List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
 			//검색한 contact의 getInfo()메소드를 이용해 모든 검색 결과를 저장하는 String list 생성
 			for(ContactInfo searchContact: listSearchInfo){
-				strListSearchInfo.add(searchContact.getInfo());
+				strListSearchInfo.add(searchContact.toString());
 			}
 			cli.printContactInfo(strListSearchInfo); //검색한 Contact를 출력
 			
@@ -289,7 +290,7 @@ public class ContactManager{
 			
 			List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
 			for(ContactInfo searchContact: listSearchInfo){
-				strListSearchInfo.add(searchContact.getInfo());
+				strListSearchInfo.add(searchContact.toString());
 			}
 			cli.printContactInfo(strListSearchInfo); //검색한 Contact를 출력
 			
@@ -299,7 +300,7 @@ public class ContactManager{
 			int indexForContact = cli.promptForEdit();
 			ContactInfo contactToEdit = listSearchInfo.get(indexForContact - 1);
 			
-			int indexForAttribute = cli.promptForEditAttribute(contactToEdit.getInfo(), contactToEdit.getContactType());
+			int indexForAttribute = cli.promptForEditAttribute(contactToEdit.toString(), contactToEdit.getContactType());
 			if(indexForAttribute == 3) {indexForAttribute = contactToEdit.getContactType().getAttributeCount();}
 			String editQuery = cli.promptForQuery(ContactAttribute.findByAttributeCount(indexForAttribute));
 			
@@ -327,17 +328,17 @@ public class ContactManager{
 		for(ContactInfo contact : allContacts){
 			switch(contact.getContactType()){
 				case RELATION:
-					strNormalContacts.add(contact.getInfo());
+					strNormalContacts.add(contact.toString());
 					break;
 				case CLUB_NAME:
-					strClubContacts.add(contact.getInfo());
+					strClubContacts.add(contact.toString());
 					break;
 				case DEPARTMENT:
-					strDepartmentContacts.add(contact.getInfo());
+					strDepartmentContacts.add(contact.toString());
 					break;	
 				default:
 					cli.printErrorMessage("Error occuerd. Please try again.");
-					cli.printErrorMessage(contact.getInfo());
+					cli.printErrorMessage(contact.toString());
 					return;
 			}
 		}

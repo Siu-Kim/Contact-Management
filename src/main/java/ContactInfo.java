@@ -9,7 +9,7 @@ public abstract class ContactInfo {
         phonenum = phonenum_Input;
     }
     
-    protected abstract String getInfo();
+    protected abstract String[] getInfo();
     public abstract String toString();
     protected abstract ContactAttribute getContactType();
 	abstract boolean matches(ContactAttribute attribute, String query);

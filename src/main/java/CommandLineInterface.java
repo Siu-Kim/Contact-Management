@@ -24,8 +24,8 @@ public class CommandLineInterface {
 	int getMainMenu(){
 		StringBuilder strMainMenu = new StringBuilder();
 		
-		strMainMenu.append("----<Main Menu>----").append('\n')
-			.append("1. Set size of totoal contacts\n")
+		strMainMenu.append("------<Main Menu>------").append('\n')
+			.append("1. Set size of total contacts\n")
 			.append("2. Save the current contact to a file\n")
 			.append("3. Load the saved contact file\n")
 			.append("4. Register new contact\n")

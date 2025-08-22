@@ -15,8 +15,14 @@ public class NormalContact extends ContactInfo{
         relation = relation_user;
     }
     
-    protected String getInfo(){
-		return this.toString();
+	//contactInfo는 String[] 형식을 사용해서 전달
+    protected String[] getInfo(){
+		String contactElement[] = new String[3];
+		contactElement[0] = this.name;
+		contactElement[1] = this.phonenum;
+		contactElement[2] = this.relation;
+
+		return contactElement;
     }
     /*toString 메서드는 보통 디버깅을 위해 Overriding되며, 로깅, 에러메세지 출력 등에도 사용 가능. 
     그러나 이러한 용도 외의 프로덕션 코드로는 toString이 아닌 별도로 정의된 메서드를 사용하는 것이 

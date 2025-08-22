@@ -44,9 +44,9 @@ public class FileOutputInterface{
         StringBuilder sb = new StringBuilder();
         ContactAttribute attribute = contact.getContactType();
 
-        sb.append(contact.getName()).append(' ')
-        .append(contact.getPhoneNumber()).append(' ')
-        .append(attribute.getAttributeStringFormat()).append('\n');
+        sb.append(contact.getName()).append("\\")
+        .append(contact.getPhoneNumber()).append("\\")
+        .append(attribute.getAttributeStringFormat()).append("\n");
 
         return sb.toString();
     }

@@ -12,8 +12,13 @@ public class DepartmentContact extends ContactInfo{
         department = depart_Input;
     }
     
-    protected String getInfo(){
-    	return this.toString();   
+    protected String[] getInfo(){
+		String contactElement[] = new String[3];
+		contactElement[0] = this.name;
+		contactElement[1] = this.phonenum;
+		contactElement[2] = this.department;
+
+		return contactElement;
     }
     
     

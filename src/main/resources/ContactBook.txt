@@ -1,2 +1,2 @@
-AAA 010-6702-5128 myself
-BBB 010-9506-5128 Mom
+a\010-1111-2222\relation
+b\010-2222-3333\club name
