@@ -3,9 +3,10 @@ package main.java;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
-
+import java.util.Map;
 
 public class ContactManager{
   
@@ -45,8 +46,8 @@ public class ContactManager{
 		boolean isSameContact(String name, String phonenum, String attribute){
 			for(T contact: Storage){
 				String contactElement[] = contact.getInfo();
-				if((contactElement[0] == name) && (contactElement[1] == phonenum) 
-				&& (contactElement[2] == attribute)){
+				if((contactElement[0].equals(name)) && (contactElement[1].equals(phonenum)) 
+				&& (contactElement[2].equals(attribute))){
 					return true;
 				}
 			}
@@ -73,12 +74,12 @@ public class ContactManager{
 			}
 		}
 		
-		void edit(T contact, String query) throws IndexOutOfBoundsException{
+		void edit(T contact, int queryType, String query) throws IndexOutOfBoundsException{
 			if(Storage.contains(contact)){
 				int index = Storage.indexOf(contact);
 				T tempContact = Storage.get(index);
-				
-				tempContact.setInfo(contact.getContactType(), query);
+				ContactAttribute tempAttribute = ContactAttribute.findByAttributeCount(queryType);
+				tempContact.setInfo(tempAttribute, query);
 				Storage.set(index, tempContact);
 				return;
 			}
@@ -147,7 +148,7 @@ public class ContactManager{
 			for(String contactInfo: fileContacts){
 				String parsedContactInfo[] = parseFileContents(contactInfo);
 				if(!checkDuplicated(parsedContactInfo)){
-					addFileContact(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2]);
+					addFileContact(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2], parsedContactInfo[3]);
 					count++;
 				}
 			}
@@ -163,7 +164,7 @@ public class ContactManager{
 	}
 
 	private String[] parseFileContents(String contactInfo){
-		String parsedContactInfo[] = contactInfo.split("\\");
+		String parsedContactInfo[] = contactInfo.split("/");
 		return parsedContactInfo;
 	}
 
@@ -172,8 +173,8 @@ public class ContactManager{
 		(parsedContactInfo[0], parsedContactInfo[1], parsedContactInfo[2]);
 	}
 
-	private void addFileContact(String name, String phonenum, String attribute){
-		ContactAttribute type = ContactAttribute.findByAttributeStringFormat(attribute);
+	private void addFileContact(String name, String phonenum, String attribute, String contactType){
+		ContactAttribute type = ContactAttribute.valueOf(contactType);
 		switch(type){
 			case RELATION:
 				contactStorage.addContact(new NormalContact(name, phonenum, attribute));
@@ -279,34 +280,16 @@ public class ContactManager{
 		return;
 	}
 	
-	private void editContact(){
+	private void editContact(){ // LIst<String> searchForEdit() / ContactInfo selectContactForEdit / String getEditQuery 할 내용 받기 / editContact
 		//search 매커니즘 이용해서 검색 결과 표시 -> 원하는 Contact 선택 -> 수정하고 싶은 멤버 변수 선택 (int type number, String query) 입력
-		
-		int type = cli.getEditContactMenu();
 		try{ 
-			ContactAttribute inputAttribute = ContactAttribute.findByAttributeCount(type);
-			String searchQuery = cli.promptForQuery(inputAttribute);
-			List<ContactInfo> listSearchInfo = contactStorage.search(inputAttribute, searchQuery);
+			List<ContactInfo> listSearchInfo = searchForEdit();
+			showSearchInfoForEdit(listSearchInfo);
 			
-			List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
-			for(ContactInfo searchContact: listSearchInfo){
-				strListSearchInfo.add(searchContact.toString());
-			}
-			cli.printContactInfo(strListSearchInfo); //검색한 Contact를 출력
-			
-			//edit할 Contact의 index 선택 -> 해당 Contact의 attribute 정렬해서 출력하고 변경할 attribute의 번호와 변경할 attribute의 query 입력
-			//-> MyStorage의 edit(ContactInfo Contact, ContactAttribute attribute, String query)에서 정보를 변경 
-			
-			int indexForContact = cli.promptForEdit();
-			ContactInfo contactToEdit = listSearchInfo.get(indexForContact - 1);
-			
-			int indexForAttribute = cli.promptForEditAttribute(contactToEdit.toString(), contactToEdit.getContactType());
-			if(indexForAttribute == 3) {indexForAttribute = contactToEdit.getContactType().getAttributeCount();}
-			String editQuery = cli.promptForQuery(ContactAttribute.findByAttributeCount(indexForAttribute));
-			
-			contactStorage.edit(contactToEdit, editQuery);
-				cli.printErrorMessage("Edit failed. Please try again...");	
-			
+			ContactInfo contactToEdit = selectContactForEdit(listSearchInfo);
+			int queryType = getQueryType(contactToEdit);
+			contactStorage.edit(contactToEdit, queryType, getEditQuery(queryType));
+
 			cli.printEditSuccessfully();
 			return;			
 		}
@@ -317,7 +300,42 @@ public class ContactManager{
 			cli.printErrorMessage(e.getMessage());
 		}	
 	}
+
+	private List<ContactInfo> searchForEdit(){
+		int type = cli.getEditContactMenu();
+
+		ContactAttribute inputAttribute = ContactAttribute.findByAttributeCount(type);
+		String searchQuery = cli.promptForQuery(inputAttribute);
+		List<ContactInfo> listSearchInfo = contactStorage.search(inputAttribute, searchQuery);
+
+		return listSearchInfo;
+	}
+
+	private void showSearchInfoForEdit(List<ContactInfo> listSearchInfo){
+		List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
+		for(ContactInfo searchContact: listSearchInfo){
+			strListSearchInfo.add(searchContact.toString());
+		}
+		cli.printContactInfo(strListSearchInfo); //검색한 Contact를 출력
+	}
+
+	private ContactInfo selectContactForEdit(List<ContactInfo> listSearchInfo){
+		int indexForContact = cli.promptForEdit();
+		ContactInfo contactToEdit = listSearchInfo.get(indexForContact - 1);
+		return contactToEdit;
+	}
 	
+	private String getEditQuery(int indexForAttribute){
+		String editQuery = cli.promptForQuery(ContactAttribute.findByAttributeCount(indexForAttribute));
+		return editQuery;
+	}
+
+	private int getQueryType(ContactInfo contactToEdit){
+		int indexForAttribute = cli.promptForEditAttribute(contactToEdit.toString(), contactToEdit.getContactType());
+		if(indexForAttribute == 3) {indexForAttribute = contactToEdit.getContactType().getAttributeCount();}
+		return indexForAttribute;
+	}
+
 	private void viewAllContacts(){
 		List<ContactInfo> allContacts = contactStorage.getAllContacts();
 		

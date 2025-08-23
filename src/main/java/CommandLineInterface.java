@@ -173,8 +173,6 @@ public class CommandLineInterface {
 		return getInteger();
 	}
 
-	
-	
 	int promptForEdit(){
 		System.out.print("\nSelect the Contact number to Edit: ");
 		return getInteger();

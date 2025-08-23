@@ -42,11 +42,12 @@ public class FileOutputInterface{
 
     private String convertToFileContactFormat(ContactInfo contact){
         StringBuilder sb = new StringBuilder();
-        ContactAttribute attribute = contact.getContactType();
+        String contactElement[] = contact.getInfo();
 
-        sb.append(contact.getName()).append("\\")
-        .append(contact.getPhoneNumber()).append("\\")
-        .append(attribute.getAttributeStringFormat()).append("\n");
+        sb.append(contactElement[0]).append("/")
+        .append(contactElement[1]).append("/")
+        .append(contactElement[2]).append("/")
+        .append(contact.getContactType()).append("\n");
 
         return sb.toString();
     }
