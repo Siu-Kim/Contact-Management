@@ -3,10 +3,8 @@ package main.java;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
 
 public class ContactManager{
   
@@ -215,7 +213,8 @@ public class ContactManager{
 					contactStorage.addContact(departContact);
 					break;
 				default:
-					cli.printErrorMessage("Selected Wrong Number... Please Try Again.");
+					cli.printErrorMessage("Selected Wrong Number... Please Try Again."); 
+					//promptForName 실행 전에 오류를 처리할 수 있도록 수정 필요
 			}
 			return;
 		}
@@ -252,24 +251,14 @@ public class ContactManager{
 		return;
 	}
 
-	private void deleteContact(){
-		int type = cli.getDeleteContactMenu();
-		
+
+	private void deleteContact(){		
 		try{
-			ContactAttribute inputAttribute = ContactAttribute.findByAttributeCount(type);
-			String query = cli.promptForQuery(inputAttribute);
-			List<ContactInfo> listSearchInfo = contactStorage.search(inputAttribute, query);
-			
-			List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
-			//검색한 contact의 getInfo()메소드를 이용해 모든 검색 결과를 저장하는 String list 생성
-			for(ContactInfo searchContact: listSearchInfo){
-				strListSearchInfo.add(searchContact.toString());
-			}
-			cli.printContactInfo(strListSearchInfo); //검색한 Contact를 출력
-			
-			int indexForDelete = cli.promptForDelete(); //삭제할 Contact의 index를 CLI에서 입력받기
-			ContactInfo contactToDelete = listSearchInfo.get(indexForDelete - 1);
-			if(cli.checkSurelyDelete()) {contactStorage.delete(contactToDelete);} // 삭제 여부를 재확인 및 삭제 처리
+			List<ContactInfo> listSearchInfo = searchForDelete();
+			showSearchInfo(listSearchInfo);
+
+			ContactInfo contactToDelete = selectContactForDelete(listSearchInfo);
+			if(cli.checkSurelyDelete()) {contactStorage.delete(contactToDelete);}
 		}
 		catch(IndexOutOfBoundsException e){
 			cli.printErrorMessage(e.getMessage());
@@ -279,12 +268,29 @@ public class ContactManager{
 		}		
 		return;
 	}
+
+	private List<ContactInfo> searchForDelete(){
+		int type = cli.getDeleteContactMenu();
+
+		ContactAttribute inputAttribute = ContactAttribute.findByAttributeCount(type);
+		String searchQuery = cli.promptForQuery(inputAttribute);
+		List<ContactInfo> listSearchInfo = contactStorage.search(inputAttribute, searchQuery);
+
+		return listSearchInfo;
+	}
+
+	private ContactInfo selectContactForDelete(List<ContactInfo> listSearchInfo){
+		int indexForContact = cli.promptForDelete();
+		ContactInfo contactToDelete = listSearchInfo.get(indexForContact - 1);
+		return contactToDelete;
+	}
+
 	
 	private void editContact(){ // LIst<String> searchForEdit() / ContactInfo selectContactForEdit / String getEditQuery 할 내용 받기 / editContact
 		//search 매커니즘 이용해서 검색 결과 표시 -> 원하는 Contact 선택 -> 수정하고 싶은 멤버 변수 선택 (int type number, String query) 입력
 		try{ 
 			List<ContactInfo> listSearchInfo = searchForEdit();
-			showSearchInfoForEdit(listSearchInfo);
+			showSearchInfo(listSearchInfo);
 			
 			ContactInfo contactToEdit = selectContactForEdit(listSearchInfo);
 			int queryType = getQueryType(contactToEdit);
@@ -311,7 +317,7 @@ public class ContactManager{
 		return listSearchInfo;
 	}
 
-	private void showSearchInfoForEdit(List<ContactInfo> listSearchInfo){
+	private void showSearchInfo(List<ContactInfo> listSearchInfo){
 		List<String> strListSearchInfo = new ArrayList<>(); //검색한 Contact의 정보를 저장할 ArryList<String> 객체
 		for(ContactInfo searchContact: listSearchInfo){
 			strListSearchInfo.add(searchContact.toString());
@@ -335,6 +341,7 @@ public class ContactManager{
 		if(indexForAttribute == 3) {indexForAttribute = contactToEdit.getContactType().getAttributeCount();}
 		return indexForAttribute;
 	}
+
 
 	private void viewAllContacts(){
 		List<ContactInfo> allContacts = contactStorage.getAllContacts();

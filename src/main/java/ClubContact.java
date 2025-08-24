@@ -77,7 +77,7 @@ public class ClubContact extends ContactInfo{
 		return;
 	}
 	void setPhoneNumber(String phonenum_Input){
-		this.name = phonenum_Input;
+		this.phonenum = phonenum_Input;
 		return;
 	}
 	void setClubName(String clubName_Input){

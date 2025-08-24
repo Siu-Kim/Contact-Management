@@ -77,7 +77,7 @@ public class DepartmentContact extends ContactInfo{
 		return;
 	}
 	void setPhoneNumber(String phonenum_Input){
-		this.name = phonenum_Input;
+		this.phonenum = phonenum_Input;
 		return;
 	}
 	void setDepartment(String department_Input){

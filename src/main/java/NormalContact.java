@@ -78,11 +78,11 @@ public class NormalContact extends ContactInfo{
 		return;
 	}
 	void setPhoneNumber(String phonenum_Input){
-		this.name = phonenum_Input;
+		this.phonenum = phonenum_Input;
 		return;
 	}	
 	void setRelation(String relation_Input){
-		this.name = relation_Input;
+		this.relation = relation_Input;
 		return;
 	}
 }
