@@ -1,5 +1,6 @@
-package Main;
+package main.java;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class CommandLineInterface {
@@ -9,12 +10,12 @@ public class CommandLineInterface {
 		sc = new Scanner(System.in);
 	}
 
-	private String getString(){
+	private String getString() throws InputMismatchException{
 		String strUserInput = sc.nextLine();
 		
 		return strUserInput;
 	}
-	private int getInteger(){
+	private int getInteger() throws InputMismatchException{
 		int intUserInput = sc.nextInt();
 		sc.nextLine(); //개행문자 제거를 위한 코드
 		return intUserInput;
@@ -23,8 +24,8 @@ public class CommandLineInterface {
 	int getMainMenu(){
 		StringBuilder strMainMenu = new StringBuilder();
 		
-		strMainMenu.append("----<Main Menu>----").append('\n')
-			.append("1. Set size of totoal contacts\n")
+		strMainMenu.append("------<Main Menu>------").append('\n')
+			.append("1. Set size of total contacts\n")
 			.append("2. Save the current contact to a file\n")
 			.append("3. Load the saved contact file\n")
 			.append("4. Register new contact\n")
@@ -104,17 +105,17 @@ public class CommandLineInterface {
 		return getInteger();
 	}
 	
-	String promptForQuery(int type){
-		switch(type){
-			case 1:
+	String promptForQuery(ContactAttribute attribute){
+		switch(attribute){
+			case NAME:
 				return promptForName();
-			case 2:
+			case PHONE_NUMBER:
 				return promptForPhoneNumber();
-			case 3:
+			case RELATION:
 				return promptForRelation();
-			case 4:
+			case CLUB_NAME:
 				return promptForClubName();
-			case 5:
+			case DEPARTMENT:
 				return promptForDepartment();
 			default:
 				throw new RuntimeException("There is no contact with this query.");
@@ -171,12 +172,46 @@ public class CommandLineInterface {
 	
 		return getInteger();
 	}
+
+	int promptForEdit(){
+		System.out.print("\nSelect the Contact number to Edit: ");
+		return getInteger();
+	}
+	
+	int promptForEditAttribute(String contactInfo, ContactAttribute attribute){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Contact Information\n")
+				.append(String.format("\t%s", contactInfo))
+				.append("Select the variable to Edit\n")
+				.append("\t1. name\n")
+				.append("\t2. phone number\n");
+		switch (attribute) {
+			case RELATION:
+				sb.append("\t3. relation\n").append("Select:");
+				break;
+			case CLUB_NAME:
+				sb.append("\t3. club name\n").append("Select:");
+				break;
+			case DEPARTMENT:
+				sb.append("\t3. department\n").append("Select:");
+				break;
+			default:
+				throw new IllegalArgumentException
+				("The parameter \'ContactAttribute attribute\' has wrong value.\nIt must have only RELATION or CLUB_NAME or DEPARTMENT these three value.");
+		}
+		System.out.print(sb);
+		return getInteger();		
+	}
+
+	void printEditSuccessfully(){
+		System.out.println("Edit Successfully completed.");
+	}
 	
 	void printContactInfo(List<String> strListContactInfo){
 		System.out.printf("Contact Information\n");
 		for(String strSearchInfo: strListContactInfo){
 			int i = 0;
-			System.out.printf("\t%d. %s\n", ++i, strSearchInfo);
+			System.out.printf("\t%d. %s", ++i, strSearchInfo);
 		}
 		
 		return;
@@ -193,7 +228,7 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i <normalContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(normalContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(normalContacts.get(i));
 			}
 		}
 		
@@ -204,7 +239,7 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i < clubContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(clubContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(clubContacts.get(i));
 			}
 		}
 		
@@ -215,11 +250,16 @@ public class CommandLineInterface {
 		}
 		else{
 			for(int i = 0; i <departmentContacts.size(); i++){
-				sb.append(String.format("\t%d. ", i+1)).append(departmentContacts.get(i)).append('\n');
+				sb.append(String.format("\t%d. ", i+1)).append(departmentContacts.get(i));
 			}
 		}
 		
 		System.out.println(sb);
+	}
+
+	void printResultOfLoadContact(int countAddedContact){
+		System.out.printf("%d Contacts from File have loaded  Successfully to Storage...\n\n", countAddedContact);
+		return;
 	}
 	
 	void printErrorMessage(String errorMessage){

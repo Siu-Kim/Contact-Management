@@ -1,4 +1,4 @@
-package Main;
+package main.java;
 
 public class ClubContact extends ContactInfo{
     private String clubName;
@@ -12,8 +12,13 @@ public class ClubContact extends ContactInfo{
         clubName = clubName_Input;
     }
     
-    protected String getInfo(){
-        return this.toString();
+    protected String[] getInfo(){
+		String contactElement[] = new String[3];
+		contactElement[0] = this.name;
+		contactElement[1] = this.phonenum;
+		contactElement[2] = this.clubName;
+
+		return contactElement;
     }
 
     
@@ -21,13 +26,13 @@ public class ClubContact extends ContactInfo{
         StringBuilder strContactInfo = new StringBuilder();
         strContactInfo.append("name: ").append(this.name).append(" / ");
         strContactInfo.append("phone number: ").append(this.phonenum).append(" / ");
-        strContactInfo.append("club name: ").append(this.clubName);
+        strContactInfo.append("club name: ").append(this.clubName).append('\n');
         
         return strContactInfo.toString();
     }
 	
-	protected String getContactType(){
-		return "ClubContact";
+	protected ContactAttribute getContactType(){
+		return ContactAttribute.CLUB_NAME;
 	}
 	
 	boolean matches(ContactAttribute attribute, String query){
@@ -72,7 +77,7 @@ public class ClubContact extends ContactInfo{
 		return;
 	}
 	void setPhoneNumber(String phonenum_Input){
-		this.name = phonenum_Input;
+		this.phonenum = phonenum_Input;
 		return;
 	}
 	void setClubName(String clubName_Input){

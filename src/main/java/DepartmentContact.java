@@ -1,4 +1,4 @@
-package Main;
+package main.java;
 
 public class DepartmentContact extends ContactInfo{
     private String department;
@@ -12,8 +12,13 @@ public class DepartmentContact extends ContactInfo{
         department = depart_Input;
     }
     
-    protected String getInfo(){
-    	return this.toString();   
+    protected String[] getInfo(){
+		String contactElement[] = new String[3];
+		contactElement[0] = this.name;
+		contactElement[1] = this.phonenum;
+		contactElement[2] = this.department;
+
+		return contactElement;
     }
     
     
@@ -21,12 +26,12 @@ public class DepartmentContact extends ContactInfo{
         StringBuilder strContactInfo = new StringBuilder();
         strContactInfo.append("name: ").append(this.name).append(" / ");
         strContactInfo.append("phone number: ").append(this.phonenum).append(" / ");
-        strContactInfo.append("department: ").append(this.department);
+        strContactInfo.append("department: ").append(this.department).append('\n');
         
         return strContactInfo.toString();
     }
-    protected String getContactType(){
-		return "DepartmentContact";
+    protected ContactAttribute getContactType(){
+		return ContactAttribute.DEPARTMENT;
 	}
 	
 	boolean matches(ContactAttribute attribute, String query){
@@ -72,7 +77,7 @@ public class DepartmentContact extends ContactInfo{
 		return;
 	}
 	void setPhoneNumber(String phonenum_Input){
-		this.name = phonenum_Input;
+		this.phonenum = phonenum_Input;
 		return;
 	}
 	void setDepartment(String department_Input){
