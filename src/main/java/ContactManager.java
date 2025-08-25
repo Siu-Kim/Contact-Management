@@ -88,12 +88,12 @@ public class ContactManager{
 	MyStorage<ContactInfo> contactStorage;
 	CommandLineInterface cli;
 	
-	ContactManager(CommandLineInterface instance_cli){
+	public ContactManager(CommandLineInterface instance_cli){
 		cli = instance_cli;
 		contactStorage = new MyStorage<ContactInfo>();
 	}
 	
-	boolean run() throws RuntimeException{
+	public boolean run() throws RuntimeException{
 		int userChoice = cli.getMainMenu();
 		
 		switch(userChoice){

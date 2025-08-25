@@ -6,7 +6,7 @@ import java.util.List;
 public class CommandLineInterface {
 	private Scanner sc;
 
-	CommandLineInterface(){
+	public CommandLineInterface(){
 		sc = new Scanner(System.in);
 	}
 

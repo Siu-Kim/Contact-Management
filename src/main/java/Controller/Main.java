@@ -1,4 +1,7 @@
-package main.java;
+package main.java.Controller;
+
+import main.java.CommandLineInterface;
+import main.java.ContactManager;
 
 public class Main {
 
